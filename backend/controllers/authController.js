@@ -17,12 +17,9 @@ export const registerUser = async (req, res) => {
   try {
     const formattedPhone = formatPhoneNumber(phone);
 
-    // Generate OTP
-    const otp = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP
-
     // Send OTP via Twilio service
-    const otpSent = await sendOTP(formattedPhone, otp);
-    if (!otpSent) {
+    const otp = await sendOTP(formattedPhone);
+    if (!otp) {
       return res.status(500).json({ message: 'Failed to send OTP. Please try again.' });
     }
 
